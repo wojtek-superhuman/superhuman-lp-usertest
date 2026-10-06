@@ -6,6 +6,10 @@
 @font-face{font-family:"SuperMail Sans";src:url("fonts/SuperMailSans-Regular.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:"SuperMail Sans";src:url("fonts/SuperMailSans-Medium.ttf") format("truetype");font-weight:500;font-style:normal;font-display:swap}
 @font-face{font-family:"SuperMail Sans";src:url("fonts/SuperMailSans-SemiBold.ttf") format("truetype");font-weight:600;font-style:normal;font-display:swap}
+/* Button face: same files, vertical metrics rebalanced so cap height sits optically centred in single-line controls */
+@font-face{font-family:"SuperMail Sans UI";src:url("fonts/SuperMailSans-Regular.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap;ascent-override:97.5%;descent-override:27.5%;line-gap-override:0%}
+@font-face{font-family:"SuperMail Sans UI";src:url("fonts/SuperMailSans-Medium.ttf") format("truetype");font-weight:500;font-style:normal;font-display:swap;ascent-override:97.5%;descent-override:27.5%;line-gap-override:0%}
+@font-face{font-family:"SuperMail Sans UI";src:url("fonts/SuperMailSans-SemiBold.ttf") format("truetype");font-weight:600;font-style:normal;font-display:swap;ascent-override:97.5%;descent-override:27.5%;line-gap-override:0%}
 @font-face{font-family:"SuperMail Sans";src:url("fonts/SuperMailSans-Bold.ttf") format("truetype");font-weight:700;font-style:normal;font-display:swap}
 
 :root{
@@ -41,7 +45,7 @@ h1,h2,h3,p{margin:0}
 .on-dark .body,.on-dark.body{color:var(--on-dark)}
 
 /* buttons */
-.btn{display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;cursor:pointer;border:0;font-family:inherit;transition:filter .15s ease, background-color .15s ease}
+.btn{display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;cursor:pointer;border:0;font-family:"SuperMail Sans UI", var(--font);transition:filter .15s ease, background-color .15s ease}
 .btn-main{height:44px;padding:0 20px;border-radius:12px;background:var(--purple);color:var(--white);font-weight:500;font-size:18px;line-height:27px}
 .btn-main:hover{filter:brightness(1.08)}
 .btn-text{height:44px;padding:0 20px;border-radius:12px;background:transparent;color:var(--purple);font-weight:500;font-size:18px;line-height:27px}
@@ -79,7 +83,7 @@ h1,h2,h3,p{margin:0}
 .hero-ctas{display:flex;gap:16px;margin-top:40px;flex-wrap:wrap;justify-content:center}
 .hero-visual{position:relative;margin-top:86px;padding-bottom:79px}
 .hero-bg{position:absolute;left:0;right:0;top:-67px;bottom:0;width:100%;height:calc(100% + 67px);max-width:none;object-fit:cover;object-position:center top}
-.hero-app{position:relative;width:100%;aspect-ratio:2559/1399;border-radius:16px;box-shadow:0 14px 102px rgba(0,0,0,.15);background:var(--paper)}
+.hero-app{display:block;position:relative;width:100%;height:auto;aspect-ratio:1920/1050;object-fit:cover;overflow:hidden;border-radius:16px;box-shadow:0 14px 102px rgba(0,0,0,.15);background:var(--paper)}
 
 /* alt (plum) */
 .alt{background:var(--plum);padding-top:99px;padding-bottom:87px}
@@ -232,9 +236,19 @@ h1,h2,h3,p{margin:0}
       </div>
     </div>
     <div class="hero-visual">
-      <img class="hero-bg" src="assets/hero-bg.webp" alt="" aria-hidden="true">
+      <img class="hero-bg" id="hero-bg" src="assets/hero-bg.webp" alt="" aria-hidden="true">
+      <script>
+        /* Chromium browsers (Chrome, Edge, Brave, Opera, Arc…) get the animated mesh background */
+        (function () {
+          try {
+            var brands = (navigator.userAgentData && navigator.userAgentData.brands) || [];
+            var isChromium = brands.some(function (b) { return /Chromium/i.test(b.brand); });
+            if (isChromium) document.getElementById('hero-bg').src = 'assets/hero-bg-animated.svg';
+          } catch (e) {}
+        })();
+      </script>
       <div class="wrap">
-        <img class="hero-app" src="assets/hero-app.webp" alt="Superhuman Notetaker app showing meeting notes for Project Extraperson Sync with an AI sidebar">
+        <video class="hero-app" id="hero-app" autoplay muted loop playsinline preload="auto" poster="assets/hero-app.webp" aria-label="Superhuman Notetaker app showing meeting notes for Project Extraperson Sync"><source src="assets/hero-app.webm" type="video/webm"></video>
       </div>
     </div>
   </section>
@@ -250,21 +264,21 @@ h1,h2,h3,p{margin:0}
       </div>
       <div class="features three">
         <div class="feature">
-          <div class="tile t74"><img src="assets/icon-alt-1.svg" alt=""></div>
+          <div class="tile t74"><img src="assets/icon-alt-1.svg?v=2" alt=""></div>
           <div class="txt">
             <h3 class="t-m">No bot joining call, just you and your teammates</h3>
             <p class="b-m body">Notetaker uses your computer's audio output, so no bots need to join your calls. Adjust the privacy settings to keep everyone comfortable.</p>
           </div>
         </div>
         <div class="feature">
-          <div class="tile t74"><img src="assets/icon-alt-2.svg" alt=""></div>
+          <div class="tile t74"><img src="assets/icon-alt-2.svg?v=2" alt=""></div>
           <div class="txt">
             <h3 class="t-m">Narrow down heaps of text in seconds with AI</h3>
             <p class="b-m body">Finding the right detail in your notes can feel like searching for a needle in a haystack. AI helps you find it in seconds—and follow up, too.</p>
           </div>
         </div>
         <div class="feature">
-          <div class="tile t74"><img src="assets/icon-alt-3.svg" alt=""></div>
+          <div class="tile t74"><img src="assets/icon-alt-3.svg?v=2" alt=""></div>
           <div class="txt">
             <h3 class="t-m">Works with all your meeting apps, and standalone too</h3>
             <p class="b-m body">Superhuman Notetaker works with Zoom, Google Meet, Teams, and every other meeting app. It also works on its own for private notes or live meetings.</p>
@@ -430,3 +444,6 @@ h1,h2,h3,p{margin:0}
     <img class="wordmark" src="assets/wordmark.svg" alt="" aria-hidden="true">
   </div>
 </footer>
+<script>
+  (function(){try{var v=document.getElementById("hero-app");if(v&&window.matchMedia("(prefers-reduced-motion: reduce)").matches){v.removeAttribute("autoplay");v.pause();}}catch(e){}})();
+</script>
