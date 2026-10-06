@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Install Superhuman Notetaker</title>
+<style>
+@font-face{font-family:"SuperMail Sans";src:url("fonts/SuperMailSans-Regular.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"SuperMail Sans";src:url("fonts/SuperMailSans-Medium.ttf") format("truetype");font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:"SuperMail Sans";src:url("fonts/SuperMailSans-SemiBold.ttf") format("truetype");font-weight:600;font-style:normal;font-display:swap}
+:root{
+  color-scheme: light;
+  --paper:#fcfaf7; --ink:#141413; --num:#241013;
+  --font:"SuperMail Sans", "Super Sans", -apple-system, "Helvetica Neue", Arial, sans-serif;
+}
+*{box-sizing:border-box}
+html,body{min-height:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+img{display:block;max-width:100%}
+h1,p{margin:0}
+
+/* 1280×700 frame: header at y=120, cards at y=224 */
+.page{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:120px 20px 100px}
+.head{display:flex;flex-direction:column;gap:8px;max-width:334px;padding-inline:8px;text-align:center}
+.head h1{font-weight:500;font-size:24px;line-height:30px}
+.head p{font-weight:400;font-size:14px;line-height:21px}
+.head a{color:inherit;text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:1px}
+.head a.restart{font-weight:600}
+.head a.browser{font-weight:500}
+.head a:hover{text-decoration-thickness:2px}
+.head a:focus-visible{outline:2px solid #714cb6;outline-offset:2px;border-radius:3px}
+
+.steps{display:grid;grid-template-columns:repeat(3,333px);gap:24px;margin-top:24px;justify-content:center}
+.step{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
+.card{position:relative;width:100%;aspect-ratio:333/236;border-radius:24px;overflow:hidden;background:var(--paper)}
+.card img{width:100%;height:100%;object-fit:cover}
+.card .file{position:absolute;left:0;right:0;top:70.76%;font-weight:500;font-size:16px;line-height:24px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.6);text-align:center;white-space:nowrap}
+.num{font-weight:400;font-size:42px;line-height:46px;letter-spacing:-.0275em;color:var(--num)}
+.txt{font-weight:400;font-size:16px;line-height:24px;max-width:333px}
+
+@media (max-width:1100px){
+  .page{justify-content:flex-start;padding-top:72px}
+  .steps{grid-template-columns:minmax(0,400px);gap:40px}
+}
+@media (max-width:400px){
+  .card .file{font-size:14px}
+}
+</style>
+</head>
+<body>
+<main class="page">
+  <div class="head">
+    <h1 id="title">Install for Mac</h1>
+    <p>Your download will begin automatically. If it didn’t, <a class="restart" id="restart" href="#">restart the download</a> or <!-- TODO: point to the Notetaker web app URL --><a class="browser" href="#">continue in your browser</a>.</p>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="card">
+        <img src="assets/install/step-1.webp" alt="">
+        <span class="file" id="file-name">Superhuman Notetaker.dmg</span>
+      </div>
+      <p class="num">1</p>
+      <p class="txt" id="step-1">Open the downloaded .dmg file</p>
+    </div>
+    <div class="step">
+      <div class="card"><img src="assets/install/step-2.webp" alt=""></div>
+      <p class="num">2</p>
+      <p class="txt" id="step-2">Add Notetaker to the Applications folder</p>
+    </div>
+    <div class="step">
+      <div class="card"><img src="assets/install/step-3.webp" alt=""></div>
+      <p class="num">3</p>
+      <p class="txt">Open the app and sign in with your Superhuman account</p>
+    </div>
+  </div>
+</main>
+
+<script src="download.js"></script>
+<script>
+(function () {
+  var params = new URLSearchParams(location.search);
+  var os = params.get("os") === "win" || params.get("os") === "mac" ? params.get("os") : window.notetakerOS();
+
+  if (os === "win") {
+    document.title = "Install Superhuman Notetaker for Windows";
+    document.getElementById("title").textContent = "Install for Windows";
+    document.getElementById("file-name").textContent = "Superhuman Notetaker.exe";
+    document.getElementById("step-1").textContent = "Open the downloaded .exe file";
+    document.getElementById("step-2").textContent = "Follow the installer to add Notetaker to your PC";
+  }
+
+  document.getElementById("restart").addEventListener("click", function (e) {
+    e.preventDefault();
+    window.notetakerDownload(os);
+  });
+
+  /* Start the download automatically once, not again on refresh or back/forward */
+  var key = "nt-dl-started";
+  var already = false;
+  try { already = sessionStorage.getItem(key) === os; } catch (e) {}
+  if (!already) {
+    setTimeout(function () { window.notetakerDownload(os); }, 400);
+    try { sessionStorage.setItem(key, os); } catch (e) {}
+  }
+})();
+</script>
+</body>
+</html>

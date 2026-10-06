@@ -1,4 +1,8 @@
+<!doctype html>
+<html lang="en">
+<head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Superhuman Notetaker</title>
 <style>
 /* Layout: 1440 reference frame, 1280 content column, fluid down to 360. Single light look, replicated 1:1 from Figma. */
@@ -204,6 +208,8 @@ h1,h2,h3,p{margin:0}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
+</head>
+<body>
 
 <header class="nav">
   <div class="nav-in">
@@ -231,7 +237,7 @@ h1,h2,h3,p{margin:0}
       <h1 class="t-hero">AI meeting support that doesn't miss a beat</h1>
       <p class="b-l muted">Superhuman Notetaker captures every word of your meeting, then automatically organizes and summarizes your notes – all without a bot joining the call.</p>
       <div class="hero-ctas">
-        <a class="btn btn-main" href="#">Try Notetaker for free</a>
+        <a class="btn btn-main js-try" href="install.html">Try Notetaker for free</a>
         <a class="btn btn-text" href="#">Get a demo</a>
       </div>
     </div>
@@ -291,7 +297,7 @@ h1,h2,h3,p{margin:0}
   <section class="band">
     <div class="wrap in">
       <h2 class="t-l">Collaboration begins with communication</h2>
-      <a class="btn btn-main" href="#">Try Notetaker for free</a>
+      <a class="btn btn-main js-try" href="install.html">Try Notetaker for free</a>
     </div>
   </section>
 
@@ -447,3 +453,12 @@ h1,h2,h3,p{margin:0}
 <script>
   (function(){try{var v=document.getElementById("hero-app");if(v&&window.matchMedia("(prefers-reduced-motion: reduce)").matches){v.removeAttribute("autoplay");v.pause();}}catch(e){}})();
 </script>
+<script src="download.js"></script>
+<script>
+  /* "Try Notetaker for free" opens the install page for the visitor's OS, which starts the download */
+  document.querySelectorAll(".js-try").forEach(function (a) {
+    a.href = "install.html?os=" + window.notetakerOS();
+  });
+</script>
+</body>
+</html>
