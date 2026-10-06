@@ -1,0 +1,35 @@
+<svg width="74" height="74" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Docs LP ">
+<g id="alt">
+<g id="Frame 2147256818">
+<g id="Row">
+<g id="Frame 2055247551">
+<g id="Column 9">
+<g id="Frame 2055247532">
+<g id="Ai that works with data - icon">
+<g clip-path="url(#clip0_10489_9164)">
+<path id="Rectangle 427323000" d="M1 13C1 6.37258 6.37258 1 13 1H61C67.6274 1 73 6.37258 73 13V61C73 67.6274 67.6274 73 61 73H13C6.37258 73 1 67.6274 1 61V13Z" fill="url(#paint0_linear_10489_9164)"/>
+<g id="table">
+<path id="glyph" d="M46.1176 23.5C48.8514 23.5 51.0676 25.7162 51.0676 28.45V45.55C51.0676 48.2838 48.8514 50.5 46.1176 50.5H27.2176C24.4838 50.5 22.2676 48.2838 22.2676 45.55V28.45C22.2676 25.7162 24.4838 23.5 27.2176 23.5H46.1176ZM33.0676 47.8H46.1176C47.3602 47.8 48.3676 46.7926 48.3676 45.55V42.4H33.0676V47.8ZM24.9676 45.55C24.9676 46.7926 25.9749 47.8 27.2176 47.8H30.3676V42.4H24.9676V45.55ZM33.0676 39.7H48.3676V34.3H33.0676V39.7ZM24.9676 39.7H30.3676V34.3H24.9676V39.7ZM27.2176 26.2C25.9749 26.2 24.9676 27.2074 24.9676 28.45V31.6H48.3676V28.45C48.3676 27.2074 47.3602 26.2 46.1176 26.2H27.2176Z" fill="#421D24"/>
+</g>
+</g>
+<rect x="0.5" y="0.5" width="73" height="73" rx="12.5" stroke="#FCFAF7" stroke-opacity="0.2"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<linearGradient id="paint0_linear_10489_9164" x1="12.334" y1="78" x2="68.334" y2="1" gradientUnits="userSpaceOnUse">
+<stop stop-color="#F0D8CB"/>
+<stop offset="0.408654" stop-color="#ECCCDE"/>
+<stop offset="1" stop-color="#EEE7FB"/>
+</linearGradient>
+<clipPath id="clip0_10489_9164">
+<rect x="1" y="1" width="72" height="72" rx="12" fill="white"/>
+</clipPath>
+</defs>
+</svg>

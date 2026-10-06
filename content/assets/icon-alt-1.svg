@@ -1,0 +1,37 @@
+<svg width="74" height="74" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Docs LP ">
+<g id="alt">
+<g id="Frame 2147256818">
+<g id="Row">
+<g id="Frame 2055247551">
+<g id="Column 3">
+<g id="From brief to launc plan - icon">
+<g clip-path="url(#clip0_10489_9164)">
+<path id="Rectangle 427323000" d="M1 13C1 6.37258 6.37258 1 13 1H61C67.6274 1 73 6.37258 73 13V61C73 67.6274 67.6274 73 61 73H13C6.37258 73 1 67.6274 1 61V13Z" fill="url(#paint0_linear_10489_9164)"/>
+<g id="file-stack">
+<g id="glyph">
+<path d="M45.107 35.2H35.207V32.5H45.107V35.2Z" fill="#421D24"/>
+<path d="M45.107 29.8H35.207V27.1H45.107V29.8Z" fill="#421D24"/>
+<path d="M45.55 20.8C48.2838 20.8 50.5 23.0162 50.5 25.75V41.159L38.459 53.2H28.45C25.7162 53.2 23.5 50.9838 23.5 48.25V30.25C23.5 27.5162 25.7162 25.3 28.45 25.3H29.8229C30.0503 22.7772 32.168 20.8 34.75 20.8H45.55ZM28.45 28C27.2074 28 26.2 29.0073 26.2 30.25V48.25C26.2 49.4926 27.2074 50.5 28.45 50.5H37.341L39.141 48.7H34.75C32.0162 48.7 29.8 46.4838 29.8 43.75V28H28.45ZM34.75 23.5C33.5074 23.5 32.5 24.5073 32.5 25.75V43.75C32.5 44.9926 33.5074 46 34.75 46H39.7V41.05C39.7 39.3103 41.1103 37.9 42.85 37.9H47.8V25.75C47.8 24.5073 46.7926 23.5 45.55 23.5H34.75ZM42.85 40.6C42.6015 40.6 42.4 40.8015 42.4 41.05V45.441L47.241 40.6H42.85Z" fill="#421D24"/>
+</g>
+</g>
+</g>
+<rect x="0.5" y="0.5" width="73" height="73" rx="12.5" stroke="#FCFAF7" stroke-opacity="0.2"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<linearGradient id="paint0_linear_10489_9164" x1="12.334" y1="78" x2="68.334" y2="1" gradientUnits="userSpaceOnUse">
+<stop stop-color="#F0D8CB"/>
+<stop offset="0.408654" stop-color="#ECCCDE"/>
+<stop offset="1" stop-color="#EEE7FB"/>
+</linearGradient>
+<clipPath id="clip0_10489_9164">
+<rect x="1" y="1" width="72" height="72" rx="12" fill="white"/>
+</clipPath>
+</defs>
+</svg>

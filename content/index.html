@@ -1,0 +1,432 @@
+<meta charset="utf-8">
+<title>Superhuman Notetaker</title>
+<style>
+/* Layout: 1440 reference frame, 1280 content column, fluid down to 360. Single light look, replicated 1:1 from Figma. */
+@font-face{font-family:"SuperMail Sans";src:url("fonts/SuperMailSans-Light.ttf") format("truetype");font-weight:300;font-style:normal;font-display:swap}
+@font-face{font-family:"SuperMail Sans";src:url("fonts/SuperMailSans-Regular.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"SuperMail Sans";src:url("fonts/SuperMailSans-Medium.ttf") format("truetype");font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:"SuperMail Sans";src:url("fonts/SuperMailSans-SemiBold.ttf") format("truetype");font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:"SuperMail Sans";src:url("fonts/SuperMailSans-Bold.ttf") format("truetype");font-weight:700;font-style:normal;font-display:swap}
+
+:root{
+  color-scheme: light;
+  --cream:#f2f0eb; --paper:#fcfaf7; --white:#ffffff; --nav-line:#d9d9d9;
+  --ink:#292827; --ink-nav:#241013; --ink-body:rgba(20,20,19,.65);
+  --plum:#421d24; --plum-mark:#4e242c; --indigo:#281647; --lilac:#e8e0ff; --lilac-btn:#d4c7ff;
+  --purple:#714cb6; --on-dark:rgba(255,255,255,.8);
+  --font:"SuperMail Sans", "Super Sans", -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --gutter:clamp(20px, 5.56vw, 80px);
+  --h-hero:clamp(42px, 5.28vw, 76px);
+  --h-xl:clamp(38px, 4.24vw, 61px);
+  --h-l:clamp(30px, 3.4vw, 49px);
+  --h-m:clamp(24px, 2.15vw, 31px);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--white);color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+a:focus-visible,button:focus-visible{outline:2px solid var(--purple);outline-offset:3px;border-radius:6px}
+h1,h2,h3,p{margin:0}
+.wrap{width:100%;max-width:calc(1280px + 2*var(--gutter));margin-inline:auto;padding-inline:var(--gutter)}
+
+/* type */
+.t-hero{font-weight:300;font-size:var(--h-hero);line-height:1.092;letter-spacing:-.0275em;text-wrap:balance}
+.t-xl{font-weight:300;font-size:var(--h-xl);line-height:1.098;letter-spacing:-.0275em;text-wrap:balance}
+.t-l{font-weight:300;font-size:var(--h-l);line-height:1.184;letter-spacing:-.0275em;text-wrap:balance}
+.t-m{font-weight:300;font-size:var(--h-m);line-height:1.194;letter-spacing:-.0275em;text-wrap:balance}
+.b-l{font-size:20px;line-height:30px;letter-spacing:-.0075em}
+.b-m{font-size:18px;line-height:27px;letter-spacing:-.0075em}
+.muted{color:var(--ink-body)}
+.on-dark{color:var(--white)}
+.on-dark .body,.on-dark.body{color:var(--on-dark)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;cursor:pointer;border:0;font-family:inherit;transition:filter .15s ease, background-color .15s ease}
+.btn-main{height:44px;padding:0 20px;border-radius:12px;background:var(--purple);color:var(--white);font-weight:500;font-size:18px;line-height:27px}
+.btn-main:hover{filter:brightness(1.08)}
+.btn-text{height:44px;padding:0 20px;border-radius:12px;background:transparent;color:var(--purple);font-weight:500;font-size:18px;line-height:27px}
+.btn-text:hover{background:rgba(113,76,182,.08)}
+.btn-lilac{height:52px;padding:0 20px;border-radius:12px;font-weight:600;font-size:16px;line-height:24px;letter-spacing:-.0075em;color:var(--ink);
+  background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,0)),var(--lilac-btn);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 0 0 1px rgba(158,123,224,.1),0 1px 2px rgba(113,76,182,.4)}
+.btn-lilac:hover{filter:brightness(1.04)}
+.btn-outline{height:52px;padding:0 20px;border-radius:12px;font-weight:600;font-size:16px;line-height:24px;letter-spacing:-.0075em;color:var(--lilac-btn);background:transparent;border:1px solid var(--lilac-btn)}
+.btn-outline:hover{background:rgba(212,199,255,.08)}
+.link{display:inline-flex;align-items:center;gap:4px;color:var(--purple);font-size:18px;line-height:27px;letter-spacing:-.0075em}
+.link svg{width:20px;height:20px;flex:none;transition:transform .15s ease}
+.link:hover svg{transform:translateX(2px)}
+
+/* nav */
+.nav{background:var(--white);border-bottom:1px solid var(--nav-line);position:relative;z-index:5}
+.nav-in{height:71px;display:flex;align-items:center;justify-content:space-between;gap:24px;padding-inline:clamp(16px,3.9vw,56px)}
+.nav-left{display:flex;align-items:center;gap:32px}
+.nav-logo img{width:168px;height:25px}
+.nav-links{display:flex;align-items:center;gap:8px}
+.nav-links a,.nav-right a.plain{display:inline-flex;align-items:center;gap:4px;height:40px;padding:0 8px;font-size:16px;line-height:21px;color:var(--ink-nav);border-radius:6px}
+.nav-links a:hover,.nav-right a.plain:hover{background:rgba(36,16,19,.05)}
+.nav-links svg{width:9px;height:6px}
+.nav-right{display:flex;align-items:center;gap:8px}
+.nav-right a.plain{padding:0 8px}
+.btn-signup{height:36px;padding:0 12px;border-radius:6px;background:var(--purple);color:var(--paper);font-weight:500;font-size:14px;line-height:18px;margin-left:8px}
+.btn-signup:hover{filter:brightness(1.08)}
+
+/* hero */
+.hero{background:var(--cream);position:relative;overflow:hidden}
+.hero-copy{display:flex;flex-direction:column;align-items:center;text-align:center;padding-top:64px;max-width:calc(922px + 2*var(--gutter))}
+.hero-copy .product{width:323px;height:33px;margin-bottom:40px}
+.hero-copy h1{color:var(--ink)}
+.hero-copy p{margin-top:24px;max-width:922px}
+.hero-ctas{display:flex;gap:16px;margin-top:40px;flex-wrap:wrap;justify-content:center}
+.hero-visual{position:relative;margin-top:86px;padding-bottom:79px}
+.hero-bg{position:absolute;left:0;right:0;top:-67px;bottom:0;width:100%;height:calc(100% + 67px);max-width:none;object-fit:cover;object-position:center top}
+.hero-app{position:relative;width:100%;aspect-ratio:2559/1399;border-radius:16px;box-shadow:0 14px 102px rgba(0,0,0,.15);background:var(--paper)}
+
+/* alt (plum) */
+.alt{background:var(--plum);padding-top:99px;padding-bottom:87px}
+.alt-row{display:grid;grid-template-columns:minmax(0,514fr) minmax(0,624fr);gap:clamp(48px,10vw,144px);align-items:center}
+.alt-row .copy{display:flex;flex-direction:column;gap:18px;max-width:514px}
+.spot{width:100%;aspect-ratio:1252/832;max-width:626px}
+.features{display:grid;gap:32px}
+.features.three{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:72px}
+.features.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+.feature{display:flex;flex-direction:column;gap:24px;min-width:0}
+.feature .txt{display:flex;flex-direction:column;gap:18px}
+.tile{position:relative;width:72px;height:72px;flex:none}
+.tile img{position:absolute;max-width:none}
+.tile.t74 img{width:74px;height:74px;left:-1px;top:-1px}
+.tile.t86 img{width:86px;height:86px;left:-7px;top:-3px}
+
+/* centered headline band */
+.band{background:var(--cream);padding-top:96px;padding-bottom:110px;text-align:center}
+.band .in{display:flex;flex-direction:column;align-items:center;gap:40px}
+.band h2{max-width:1064px}
+
+/* sections with header */
+.sec-head{display:flex;flex-direction:column;align-items:center;text-align:center;gap:24px;max-width:922px;margin-inline:auto}
+.sec-head h2{max-width:988px}
+.white{background:var(--white)}
+.apps{padding-top:80px;padding-bottom:80px}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:32px;row-gap:80px;margin-top:80px}
+.card{display:flex;flex-direction:column;min-width:0}
+.card .shot{width:100%;aspect-ratio:3/2;border-radius:36px;overflow:hidden;background:var(--cream)}
+.card .shot img{width:100%;height:100%;object-fit:cover}
+.card h3{margin-top:24px;color:var(--ink)}
+.card p{margin-top:18px}
+.card .link{margin-top:18px;align-self:flex-start}
+
+.flex{background:var(--indigo);padding-top:96px;padding-bottom:96px}
+.flex h2{text-align:center;max-width:922px;margin-inline:auto}
+.flex .features{margin-top:80px}
+
+.proof{background:var(--lilac);padding-block:80px;text-align:center}
+.proof .in{display:flex;flex-direction:column;align-items:center}
+.proof .od{width:226px;height:51px}
+.proof blockquote{margin:80px 0 0;max-width:922px;color:var(--ink)}
+.proof .who{margin-top:40px}
+.proof .link{margin-top:80px}
+
+.suite{padding-top:96px;padding-bottom:96px}
+.suite-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:32px;row-gap:29px;margin-top:80px}
+.suite-grid .feature{gap:24px}
+.suite-grid h3{color:var(--ink)}
+.suite-grid .txt{gap:18px}
+
+.cta{background:var(--plum);padding-block:80px}
+.cta .in{max-width:calc(922px + 2*var(--gutter));margin-inline:0}
+.cta h2{text-wrap:balance}
+.cta p{margin-top:32px}
+.cta .btns{display:flex;gap:16px;flex-wrap:wrap;margin-top:56px}
+
+/* footer */
+.foot{background:var(--plum);color:var(--paper);padding-top:63px;padding-bottom:36px}
+.foot .in{max-width:calc(1302px + 2*clamp(20px,4.8vw,69px));margin-inline:auto;padding-inline:clamp(20px,4.8vw,69px)}
+.foot-grid{display:grid;grid-template-columns:414fr 213fr 248fr 238fr 189fr;align-items:start}
+.foot-brand img{width:160px;height:24px}
+.foot-brand p{margin-top:35px;font-size:24px;line-height:1;letter-spacing:-.01em;max-width:283px;color:var(--paper)}
+.foot-col h4{margin:0;font-weight:600;font-size:16px;line-height:24px;color:var(--paper)}
+.foot-col ul{list-style:none;margin:20px 0 0;padding:0;display:flex;flex-direction:column;gap:16px}
+.foot-col li{font-size:16px;line-height:24px;color:var(--on-dark)}
+.foot-col li.tight{line-height:20px}
+.foot-col a{display:inline-flex;align-items:center;gap:6px}
+.foot-col a:hover{color:var(--white)}
+.foot-col .ext{display:inline-flex;width:18px;height:24px;align-items:flex-start;padding-top:8px;padding-left:4px;margin-left:-4px}
+.foot-col .ext img{width:7px;height:7px}
+.foot-col .soc img{flex:none}
+.foot-col .soc{gap:6px}
+.wordmark{margin-top:29px;width:100%;aspect-ratio:1302/129.83}
+
+/* responsive */
+@media (max-width:1180px){
+  .foot-grid{grid-template-columns:repeat(4,minmax(0,1fr));row-gap:48px}
+  .foot-brand{grid-column:1/-1}
+}
+@media (max-width:1100px){
+  .alt-row{grid-template-columns:1fr;gap:48px}
+  .alt-row .copy{max-width:640px}
+  .features.four{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:48px}
+}
+@media (max-width:980px){
+  .nav-links{display:none}
+}
+@media (max-width:900px){
+  .features.three{grid-template-columns:1fr;gap:48px;margin-top:64px}
+  .features.three .feature{max-width:560px}
+  .cards,.suite-grid{grid-template-columns:1fr;row-gap:56px}
+  .card .shot{border-radius:28px}
+  .dbr{display:none}
+}
+@media (max-width:720px){
+  .foot-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .alt{padding-top:72px;padding-bottom:72px}
+  .band{padding-top:72px;padding-bottom:80px}
+  .apps,.proof,.cta{padding-block:64px}
+  .flex,.suite{padding-block:72px}
+  .cards,.flex .features,.suite-grid,.proof blockquote,.proof .link{margin-top:56px}
+  .hero-visual{margin-top:56px;padding-bottom:48px}
+  .hero-bg{top:-40px;height:calc(100% + 40px)}
+  .hero-app{border-radius:10px}
+}
+@media (max-width:600px){
+  .features.four{grid-template-columns:1fr}
+  .b-l{font-size:18px;line-height:27px}
+  .b-m{font-size:17px;line-height:26px}
+  .link{font-size:17px}
+  .nav-right .sales{display:none}
+  .hero-copy .product{width:260px;height:auto;margin-bottom:32px}
+  .card .shot{border-radius:22px}
+}
+@media (max-width:380px){
+  .nav-logo img{width:140px;height:auto}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<header class="nav">
+  <div class="nav-in">
+    <div class="nav-left">
+      <a class="nav-logo" href="#" aria-label="Superhuman home"><img src="assets/logo-nav.svg" alt="Superhuman"></a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#">Products <svg viewBox="0 0 9 6" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.854.146a.5.5 0 0 0-.708 0L4.5 3.793.854.146a.5.5 0 1 0-.708.708L4.5 5.207 8.854.854a.5.5 0 0 0 0-.708Z" fill="#241013"/></svg></a>
+        <a href="#">Enterprise</a>
+        <a href="#">Education</a>
+        <a href="#">Pricing</a>
+      </nav>
+    </div>
+    <div class="nav-right">
+      <a class="plain sales" href="#">Contact Sales</a>
+      <a class="plain" href="#">Log in</a>
+      <a class="btn btn-signup" href="#">Sign up</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap hero-copy">
+      <img class="product" src="assets/logo-product.svg" alt="Superhuman Notetaker">
+      <h1 class="t-hero">AI notepad that doesn't miss</h1>
+      <p class="b-l muted">Superhuman Notetaker captures every word of your meeting, then automatically organizes and summarizes your notes – all without a bot joining the call.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-main" href="#">Try Notetaker for free</a>
+        <a class="btn btn-text" href="#">Get a demo</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <img class="hero-bg" src="assets/hero-bg.webp" alt="" aria-hidden="true">
+      <div class="wrap">
+        <img class="hero-app" src="assets/hero-app.webp" alt="Superhuman Notetaker app showing meeting notes for Project Extraperson Sync with an AI sidebar">
+      </div>
+    </div>
+  </section>
+
+  <section class="alt on-dark">
+    <div class="wrap">
+      <div class="alt-row">
+        <div class="copy">
+          <h2 class="t-l" style="font-size:clamp(30px,2.71vw,39px);line-height:1.205">Help before, during, and after your meeting</h2>
+          <p class="b-m body">Never miss an important point in a meeting. Superhuman Notetaker captures every word and automatically categorizes your notes. Worried about too much information? Our AI integrations help you sift through the text and find the exact point you need in seconds.</p>
+        </div>
+        <img class="spot" src="assets/spotlight.webp" alt="Ask Notetaker composer with an AI answer to “What should I focus on today?”">
+      </div>
+      <div class="features three">
+        <div class="feature">
+          <div class="tile t74"><img src="assets/icon-alt-1.svg" alt=""></div>
+          <div class="txt">
+            <h3 class="t-m">No bot joining call, just you and your teammates</h3>
+            <p class="b-m body">Notetaker uses your computer's audio output, so no bots need to join your calls. Adjust the privacy settings to keep everyone comfortable.</p>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="tile t74"><img src="assets/icon-alt-2.svg" alt=""></div>
+          <div class="txt">
+            <h3 class="t-m">Narrow down heaps of text in seconds with AI</h3>
+            <p class="b-m body">Finding the right detail in your notes can feel like searching for a needle in a haystack. AI helps you find it in seconds—and follow up, too.</p>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="tile t74"><img src="assets/icon-alt-3.svg" alt=""></div>
+          <div class="txt">
+            <h3 class="t-m">Works with all your meeting apps, and standalone too</h3>
+            <p class="b-m body">Superhuman Notetaker works with Zoom, Google Meet, Teams, and every other meeting app. It also works on its own for private notes or live meetings.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap in">
+      <h2 class="t-l">Collaboration begins with communication</h2>
+      <a class="btn btn-main" href="#">Try Notetaker for free</a>
+    </div>
+  </section>
+
+  <section class="white apps">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="t-l">One app for all</h2>
+        <p class="b-m muted">Notetaker replaces the patchwork of tools and puts everything in one place, so your whole team can move quickly as one.</p>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <div class="shot"><img src="assets/card-1.webp" alt="Structured meeting notes in Superhuman Docs" loading="lazy"></div>
+          <h3 class="t-m">Your own thoughts never looked this structured</h3>
+          <p class="b-m muted">Write bespoke notes with Superhuman Docs’ editing tools. Capture and organize your thoughts alongside the live transcript.</p>
+          <a class="link" href="#">Learn more <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M13.693 8.056a2.75 2.75 0 0 1 0 3.888l-5.836 5.836-1.06-1.06 5.836-5.837a1.25 1.25 0 0 0 0-1.766L6.797 3.28l1.06-1.06 5.836 5.836Z" fill="#714CB6"/></svg></a>
+        </article>
+        <article class="card">
+          <div class="shot"><img src="assets/card-2.webp" alt="Calendar event with a meeting detected notification" loading="lazy"></div>
+          <h3 class="t-m">In-sync with your calendars</h3>
+          <p class="b-m muted">Notetaker syncs with your calendars to remind you when meetings start and automatically share notes with your teammates afterward.</p>
+          <a class="link" href="#">Learn more <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M13.693 8.056a2.75 2.75 0 0 1 0 3.888l-5.836 5.836-1.06-1.06 5.836-5.837a1.25 1.25 0 0 0 0-1.766L6.797 3.28l1.06-1.06 5.836 5.836Z" fill="#714CB6"/></svg></a>
+        </article>
+        <article class="card">
+          <div class="shot"><img src="assets/card-3.webp" alt="On-screen Notetaker recording widget" loading="lazy"></div>
+          <h3 class="t-m">Right there when and where you need it</h3>
+          <p class="b-m muted">A handy on-screen widget keeps Notetaker always within your reach without getting in your way.</p>
+          <a class="link" href="#">Learn more <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M13.693 8.056a2.75 2.75 0 0 1 0 3.888l-5.836 5.836-1.06-1.06 5.836-5.837a1.25 1.25 0 0 0 0-1.766L6.797 3.28l1.06-1.06 5.836 5.836Z" fill="#714CB6"/></svg></a>
+        </article>
+        <article class="card">
+          <div class="shot"><img src="assets/card-4.webp" alt="Meeting notes organized into folders" loading="lazy"></div>
+          <h3 class="t-m">Doing the organizing busywork for you</h3>
+          <p class="b-m muted">Notetaker automatically keeps every meeting neatly organized and easy to find, so you can get straight to the notes you need.</p>
+          <a class="link" href="#">Learn more <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M13.693 8.056a2.75 2.75 0 0 1 0 3.888l-5.836 5.836-1.06-1.06 5.836-5.837a1.25 1.25 0 0 0 0-1.766L6.797 3.28l1.06-1.06 5.836 5.836Z" fill="#714CB6"/></svg></a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="flex on-dark">
+    <div class="wrap">
+      <h2 class="t-l">Flexible enough for every team and workflow</h2>
+      <div class="features four">
+        <div class="feature">
+          <div class="tile t74"><img src="assets/icon-flex-1.svg" alt=""></div>
+          <div class="txt"><h3 class="t-m">Product</h3><p class="b-m body">Ship faster with specs, trackers, and teams that all work together.</p></div>
+        </div>
+        <div class="feature">
+          <div class="tile t74"><img src="assets/icon-flex-2.svg" alt=""></div>
+          <div class="txt"><h3 class="t-m">Marketing</h3><p class="b-m body">Plan, create, and measure in one place with shared context.</p></div>
+        </div>
+        <div class="feature">
+          <div class="tile t74"><img src="assets/icon-flex-3.svg" alt=""></div>
+          <div class="txt"><h3 class="t-m">Sales</h3><p class="b-m body">Close faster with pipeline, playbooks, and deal insights in one place.</p></div>
+        </div>
+        <div class="feature">
+          <div class="tile t74"><img src="assets/icon-flex-4.svg" alt=""></div>
+          <div class="txt"><h3 class="t-m">Operations</h3><p class="b-m body">Bring calm and clarity to disparate tools, workflows, and teams.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="proof">
+    <div class="wrap in">
+      <img class="od" src="assets/logo-opendoor.svg" alt="Opendoor">
+      <blockquote class="t-l">“Think of it as a combination of a Google Doc, Excel, Airtable, Asana, and Zapier… that also takes notes for you.”</blockquote>
+      <p class="b-l muted who">Joshua B.<br>Platform PM at Opendoor</p>
+      <a class="link" href="#">View all customer stories <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M13.693 8.056a2.75 2.75 0 0 1 0 3.888l-5.836 5.836-1.06-1.06 5.836-5.837a1.25 1.25 0 0 0 0-1.766L6.797 3.28l1.06-1.06 5.836 5.836Z" fill="#714CB6"/></svg></a>
+    </div>
+  </section>
+
+  <section class="white suite">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="t-l">One Superhuman suite to run it all</h2>
+        <p class="b-l muted">Give your team superpowers everywhere they work.</p>
+      </div>
+      <div class="suite-grid">
+        <div class="feature">
+          <div class="tile t86"><img src="assets/icon-suite-go.svg" alt=""></div>
+          <div class="txt"><h3 class="t-m">Go: The only agent that works everywhere<br class="dbr">you work.</h3><p class="b-m muted">Give your team proactive AI assistance that travels with them, adapting to unique work styles so everyone can stay in flow.</p></div>
+        </div>
+        <div class="feature">
+          <div class="tile t86"><img src="assets/icon-suite-grammarly.svg" alt=""></div>
+          <div class="txt"><h3 class="t-m">Grammarly: The writing assistant trusted<br class="dbr">by millions.</h3><p class="b-m muted">Create better team alignment through clearer, faster communication with a writing partner trusted by 40M+ users daily.</p></div>
+        </div>
+        <div class="feature">
+          <div class="tile t86"><img src="assets/icon-suite-docs.svg" alt=""></div>
+          <div class="txt"><h3 class="t-m">Docs: The best place for teams and AI to<br class="dbr">work together.</h3><p class="b-m muted">Organize your scattered docs, data, and tools and bring the power of AI to a familiar collaborative surface—the shared doc.</p></div>
+        </div>
+        <div class="feature">
+          <div class="tile t86"><img src="assets/icon-suite-mail.svg" alt=""></div>
+          <div class="txt"><h3 class="t-m">Mail: The most productive inbox<br class="dbr">ever made.</h3><p class="b-m muted">Save your team four hours per week by helping them move through their inbox faster, allowing them to get back to what matters most.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta on-dark">
+    <div class="wrap">
+      <div class="in">
+        <h2 class="t-xl">Make one for the team</h2>
+        <p class="b-m body">And let them plan together, understand together, and build together.</p>
+        <div class="btns">
+          <a class="btn btn-lilac" href="#">Try Docs, it’s free</a>
+          <a class="btn btn-outline" href="#">Contact sales</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="in">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <img src="assets/logo-footer.svg" alt="Superhuman">
+        <p>Builders of Superhuman Platform ® apps</p>
+      </div>
+      <div class="foot-col">
+        <h4>Products</h4>
+        <ul><li><a href="#">Superhuman Go</a></li><li><a href="#">Grammarly</a></li><li><a href="#">Docs</a></li><li><a href="#">Superhuman Mail</a></li><li><a href="#">Agent Store</a></li></ul>
+      </div>
+      <div class="foot-col">
+        <h4>Company</h4>
+        <ul><li><a href="#">Contact us</a></li><li><a href="#">About</a></li><li><a href="#">Mission &amp; Values</a></li><li><a href="#">Careers</a></li><li><a href="#">Help Center</a></li><li><a href="#">Partners</a></li><li><a href="#">Superhuman Platform</a></li></ul>
+      </div>
+      <div class="foot-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Terms</a></li>
+          <li><a href="#">Privacy Policy<span class="ext"><img src="assets/privacy-icon.svg" alt=""></span></a></li>
+          <li><a href="#">Trust</a></li>
+          <li class="tight"><a href="#">Customer Business Agreement</a></li>
+          <li class="tight"><a href="#"><img src="assets/privacy.png" alt="" width="36" height="17">Your Privacy Choices</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a class="soc" href="#"><img src="assets/fa-linkedin.svg" alt="" width="14" height="14">LinkedIn</a></li>
+          <li><a class="soc" href="#"><img src="assets/x.svg" alt="" width="13" height="12">X</a></li>
+          <li><a class="soc" href="#"><img src="assets/fa-tiktok.svg" alt="" width="14" height="16">TikTok</a></li>
+          <li><a class="soc" href="#"><img src="assets/fa-instagram.svg" alt="" width="14" height="17">Instagram</a></li>
+          <li><a class="soc" href="#"><img src="assets/threads.svg" alt="" width="14" height="14">Threads</a></li>
+          <li><a class="soc" href="#"><img src="assets/fa-facebook.svg" alt="" width="16" height="16">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+    <img class="wordmark" src="assets/wordmark.svg" alt="" aria-hidden="true">
+  </div>
+</footer>
